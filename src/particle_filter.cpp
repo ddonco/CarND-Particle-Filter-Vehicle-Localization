@@ -221,8 +221,8 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 
     // update weights vector
     weights[p] = particles[p].weight;
-    std::cout << "HERE  " << p << std::endl;
   }
+  std::cout << "actual num particles  " << particles.size() << std::endl;
 }
 
 void ParticleFilter::resample() {
@@ -240,7 +240,7 @@ void ParticleFilter::resample() {
   for (int p = 0; p < num_particles; p++) {
     particles_resampled.push_back(particles[dist(gen)]);
   }
-  std::cout << "resampled HERE" << std::endl;
+  std::cout << "resampled HERE (" << particles.size() << ")" << std::endl;
 
   // replace particles with resampled particles
   particles = particles_resampled;
