@@ -15,6 +15,7 @@
 #include <random>
 #include <string>
 #include <vector>
+#include <limits>
 
 #include "helper_functions.h"
 
@@ -51,6 +52,7 @@ void ParticleFilter::init(double x, double y, double theta, double std[]) {
     // create a particle instance and add it to the particles vector
     Particle p{i, particle_x, particle_y, particle_theta, 1.0};
     particles.push_back(p);
+    weights.push_back(1.0);
   }
 }
 
@@ -73,7 +75,7 @@ void ParticleFilter::prediction(double delta_t, double std_pos[],
   for (int i = 0; i < particles.size(); i++) {
     double theta = particles[i].theta;
 
-    if (fabs(yaw_rate) > 0) {
+    if (fabs(yaw_rate) > 0.0001) {
       particles[i].x += velocity / yaw_rate * (sin(theta + yaw_rate * delta_t) - sin(theta));
       particles[i].y += velocity / yaw_rate * (cos(theta) - cos(theta + yaw_rate * delta_t));
       particles[i].theta += yaw_rate * delta_t;
@@ -98,21 +100,48 @@ void ParticleFilter::dataAssociation(vector<LandmarkObs> predicted,
    *   probably find it useful to implement this method and use it as a helper 
    *   during the updateWeights phase.
    */
-  for (int o = 0; o < observations.size(); o++) {
-    // LandmarkObs closestObs = observations[0];
-    float closestDistance = dist(predicted[0].x, predicted[0].y, observations[o].x, observations[o].y);
-    float distance = 0.0;
+  // for (int o = 0; o < observations.size(); o++) {
+  //   // LandmarkObs closestObs = observations[0];
+  //   float closestDistance = dist(predicted[0].x, predicted[0].y, observations[o].x, observations[o].y);
+  //   float distance = 0.0;
 
-    for (int p = 1; p < predicted.size(); p++) {
-      distance = dist(predicted[p].x, predicted[p].y, observations[o].x, observations[o].y);
+  //   for (int p = 1; p < predicted.size(); p++) {
+  //     distance = dist(predicted[p].x, predicted[p].y, observations[o].x, observations[o].y);
 
-      if (distance < closestDistance) {
-        // closestObs = observations[o];
-        observations[o].id = predicted[p].id;
-        closestDistance = distance;
-      }
-    }
-  }
+  //     if (distance < closestDistance) {
+  //       // closestObs = observations[o];
+  //       observations[o].id = predicted[p].id;
+  //       closestDistance = distance;
+  //     }
+  //   }
+  // }
+	for (unsigned int i = 0; i < observations.size(); ++i) {
+	    
+	    // Current observation
+	    LandmarkObs obs_curr = observations[i];
+
+	    // Initialize minimum distance to max value
+	    double dist_min = std::numeric_limits<double>::max();
+
+	    // Initialize map_id
+	    int map_id = -1;
+	    
+	    for (unsigned int j = 0; j < predicted.size(); ++j) {
+	      // Current prediction
+	      LandmarkObs pred_curr = predicted[j];
+	      
+	      // Calculate distance between current ith observation and jth landmark
+	      double dist_curr = dist(obs_curr.x, obs_curr.y, pred_curr.x, pred_curr.y);
+
+	      // Store id of the nearest landmark
+	      if (dist_curr < dist_min) {
+	        dist_min = dist_curr;
+	        map_id = pred_curr.id;
+	      }
+	    }
+	    // Link observation id to that of nearest landmark
+	    observations[i].id = map_id;
+	}
 }
 
 void ParticleFilter::updateWeights(double sensor_range, double std_landmark[], 

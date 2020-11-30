@@ -120,9 +120,6 @@ class ParticleFilter {
   
   // Vector of weights of all particles
   std::vector<double> weights;
-
-  // random number generator
-  // std::default_random_engine gen;
 };
 
 #endif  // PARTICLE_FILTER_H_
