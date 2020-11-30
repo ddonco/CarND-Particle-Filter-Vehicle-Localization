@@ -102,9 +102,10 @@ void ParticleFilter::dataAssociation(vector<LandmarkObs> predicted,
    *   probably find it useful to implement this method and use it as a helper 
    *   during the updateWeights phase.
    */
+  double distance, closestDistance;
+
   for (int o = 0; o < observations.size(); o++) {
-    double closestDistance = dist(observations[o].x, observations[o].y, predicted[0].x, predicted[0].y);
-    double distance = 0.0;
+    closestDistance = dist(observations[o].x, observations[o].y, predicted[0].x, predicted[0].y);
 
     for (int p = 0; p < predicted.size(); p++) {
       distance = dist(observations[o].x, observations[o].y, predicted[p].x, predicted[p].y);
