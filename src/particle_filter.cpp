@@ -197,7 +197,6 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
     // find predicted measurement that's closest to the observed measurement
     dataAssociation(predictions, observations_map_coords);
 
-    std::cout << "HERE  " << p << std::endl;
     // update particle weights based on particle observations vs actual observations
     for (int o = 0; o < observations_map_coords.size(); o++) {
 
@@ -222,6 +221,7 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 
     // update weights vector
     weights[p] = particles[p].weight;
+    std::cout << "HERE  " << p << std::endl;
   }
 }
 
@@ -243,6 +243,7 @@ void ParticleFilter::resample() {
 
   // replace particles with resampled particles
   particles = particles_resampled;
+  std::cout << "resampled HERE" << std::endl;
 }
 
 void ParticleFilter::SetAssociations(Particle& particle, 
