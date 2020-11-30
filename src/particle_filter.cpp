@@ -109,6 +109,7 @@ void ParticleFilter::dataAssociation(vector<LandmarkObs> predicted,
     for (int p = 0; p < predicted.size(); p++) {
       distance = dist(observations[o].x, observations[o].y, predicted[p].x, predicted[p].y);
 
+      std::cout << distance << " < " << closestDistance << std::endl;
       if (distance < closestDistance) {
         observations[o].id = predicted[p].id;
         closestDistance = distance;
