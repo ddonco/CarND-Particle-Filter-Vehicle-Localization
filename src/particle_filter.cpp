@@ -197,7 +197,7 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
     // find predicted measurement that's closest to the observed measurement
     dataAssociation(predictions, observations_map_coords);
 
-    std::cout << "HERE" << std::endl;
+    std::cout << "HERE  " << p << std::endl;
     // update particle weights based on particle observations vs actual observations
     for (int o = 0; o < observations_map_coords.size(); o++) {
 
