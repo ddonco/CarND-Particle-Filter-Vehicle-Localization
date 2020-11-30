@@ -122,7 +122,7 @@ class ParticleFilter {
   std::vector<double> weights;
 
   // random number generator
-  std::default_random_engine gen;
+  // std::default_random_engine gen;
 };
 
 #endif  // PARTICLE_FILTER_H_

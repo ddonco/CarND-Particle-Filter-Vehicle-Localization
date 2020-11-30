@@ -32,6 +32,7 @@ void ParticleFilter::init(double x, double y, double theta, double std[]) {
    *   (and others in this file).
    */
   num_particles = 100;  // TODO: Set the number of particles
+  std::default_random_engine gen;
 
   // create normal distributions for x, y, and theta
   normal_distribution<double> dist_x(x, std[0]);  
@@ -62,6 +63,8 @@ void ParticleFilter::prediction(double delta_t, double std_pos[],
    *  http://en.cppreference.com/w/cpp/numeric/random/normal_distribution
    *  http://www.cplusplus.com/reference/random/default_random_engine/
    */
+  std::default_random_engine gen;
+
   // create normal distributions for x, y, and theta
   normal_distribution<double> dist_x(0, std_pos[0]);
   normal_distribution<double> dist_y(0, std_pos[1]);
@@ -199,6 +202,7 @@ void ParticleFilter::resample() {
    * NOTE: You may find std::discrete_distribution helpful here.
    *   http://en.cppreference.com/w/cpp/numeric/random/discrete_distribution
    */
+  std::default_random_engine gen;
   std::discrete_distribution<int> dist(weights.begin(), weights.end());
 
   vector<Particle> particles_resampled;
