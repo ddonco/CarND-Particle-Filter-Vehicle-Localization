@@ -103,6 +103,7 @@ void ParticleFilter::dataAssociation(vector<LandmarkObs> predicted,
    *   during the updateWeights phase.
    */
   double distance, closestDistance;
+  int closestId;
 
   for (int o = 0; o < observations.size(); o++) {
     closestDistance = dist(observations[o].x, observations[o].y, predicted[0].x, predicted[0].y);
@@ -112,10 +113,12 @@ void ParticleFilter::dataAssociation(vector<LandmarkObs> predicted,
 
       // std::cout << distance << " < " << closestDistance << std::endl;
       if (distance < closestDistance) {
-        observations[o].id = predicted[p].id;
+        closestId = predicted[p].id;
         closestDistance = distance;
       }
     }
+
+    observations[o].id = closestId;
   }
 	// for (int i = 0; i < observations.size(); ++i) {
 	    
