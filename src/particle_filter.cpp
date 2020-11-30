@@ -53,6 +53,8 @@ void ParticleFilter::init(double x, double y, double theta, double std[]) {
     Particle p{i, particle_x, particle_y, particle_theta, 1.0};
     particles.push_back(p);
     weights.push_back(1.0);
+    
+    is_initialized = true;
   }
 }
 
@@ -222,7 +224,6 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
     // update weights vector
     weights[p] = particles[p].weight;
   }
-  std::cout << "actual num particles  " << particles.size() << std::endl;
 }
 
 void ParticleFilter::resample() {
