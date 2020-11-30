@@ -237,13 +237,13 @@ void ParticleFilter::resample() {
 
   vector<Particle> particles_resampled;
 
+  std::cout << "resampled HERE" << std::endl;
   for (int p = 0; p < num_particles; p++) {
     particles_resampled.push_back(particles[dist(gen)]);
   }
 
   // replace particles with resampled particles
   particles = particles_resampled;
-  std::cout << "resampled HERE" << std::endl;
 }
 
 void ParticleFilter::SetAssociations(Particle& particle, 
