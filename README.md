@@ -76,12 +76,6 @@ OUTPUT: values provided by the c++ program to the simulator
 ["best_particle_sense_y"] <= list of sensed y positions
 
 
-Your job is to build out the methods in `particle_filter.cpp` until the simulator output says:
-
-```
-Success! Your particle filter passed!
-```
-
 # Implementation of the Particle Filter
 The directory structure of this repository is as follows:
 
