@@ -103,15 +103,13 @@ void ParticleFilter::dataAssociation(vector<LandmarkObs> predicted,
    *   during the updateWeights phase.
    */
   for (int o = 0; o < observations.size(); o++) {
-    // LandmarkObs closestObs = observations[0];
     double closestDistance = dist(observations[o].x, observations[o].y, predicted[0].x, predicted[0].y);
     double distance = 0.0;
 
     for (int p = 0; p < predicted.size(); p++) {
-      distance = dist(observations[o].x, observations[o].y, predicted[0].x, predicted[0].y);
+      distance = dist(observations[o].x, observations[o].y, predicted[p].x, predicted[p].y);
 
       if (distance < closestDistance) {
-        // closestObs = observations[o];
         observations[o].id = predicted[p].id;
         closestDistance = distance;
       }
